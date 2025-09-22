@@ -1,46 +1,49 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
-name: Calculadora vb.App
+name: Build and Release Calculadora
 
 on:
   push:
     tags:
-      - 'v1.0.0'   # Solo se ejecuta cuando subas el tag v1.0.0
+      - 'v*'   # Se ejecuta cuando hagas un tag: v1.0.0, v1.1.0, etc.
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x' # Ajusta a la versión que uses
 
-    - name: Restore dependencies
-      run: dotnet restore
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+      - name: Build
+        run: dotnet build --configuration Release
 
-    - name: Publish
-      run: dotnet publish --configuration Release --output ./publish
+      - name: Publish as EXE
+        run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o publish
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: App-VB
-        path: ./publish/**
+      - name: Create ZIP package
+        run: Compress-Archive -Path publish/* -DestinationPath Calculadora.zip
 
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: v1.0.0
-        name: "Versión 1.0.0"
-        body: "Primera versión estable de la aplicación 🚀"
-        files: ./publish/**
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 📌 Subida como Artifact (descargable desde Actions)
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Calculadora
+          path: Calculadora.zip
+
+      # 📌 Crear Release en GitHub y adjuntar ZIP
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "Release ${{ github.ref_name }}"
+          body: "Versión de la calculadora lista para instalar 🚀"
+          files: Calculadora.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
