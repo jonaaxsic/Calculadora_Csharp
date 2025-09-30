@@ -1,9 +1,6 @@
 # 🧮 Calculadora Básica - Windows Forms (VB.NET)
 
-[![GitHub - jonaaxsic](https://img.shields.io/badge/GitHub-jonaaxsic-black?logo=github)](https://github.com/jonaaxsic)
-[![GitHub - WolfDs21](https://img.shields.io/badge/GitHub-WolfDs21-black?logo=github)](https://github.com/WolfDs21)
-![VB.NET](https://img.shields.io/badge/VB.NET-512BD4?logo=.net&logoColor=white)
-![Visual Studio](https://img.shields.io/badge/Visual%20Studio-5C2D91?logo=visualstudio&logoColor=white)
+![Visual Basic](https://img.shields.io/badge/Visual%20Basic-512BD4?style=for-the-badge&logo=visualbasic&logoColor=white) ![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white) [![GitHub](https://img.shields.io/badge/GitHub-Jonaaxsic-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Jonaaxsic)
 
 Este proyecto consiste en el desarrollo de una calculadora básica utilizando **Visual Studio** y **Windows Forms** en **VB.NET**. Forma parte de una actividad académica cuyo objetivo es aplicar conceptos de diseño de interfaz de usuario, manejo de eventos, estructuras de control de flujo y manipulación de datos.
 
